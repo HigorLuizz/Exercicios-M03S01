@@ -12,12 +12,21 @@ import java.util.List;
 public class Avaliador {
     private double maiorLance = Double.NEGATIVE_INFINITY;
     private double menorLance = Double.POSITIVE_INFINITY;
+    private int lancesIguais = 0;
+    private int lancesConsecutivos;
     public int cont;
+    public int cont2;
 
     public void avalia(Leilao leilao){
         List<Lance> lancesDoLeilao = leilao.getLances();
         for (Lance lance:lancesDoLeilao
              ) {
+            if(cont != lancesDoLeilao.size()-1 ){
+                if(lancesDoLeilao.get(cont).getUsuario() == lancesDoLeilao.get(cont+1).getUsuario()){
+                    lancesConsecutivos++;
+                }
+            }
+
             cont ++;
             if(cont == 1){
                 maiorLance = lance.getValor();
@@ -29,6 +38,13 @@ public class Avaliador {
                     menorLance = lance.getValor();
                 }
             }
+            for (Lance lances:lancesDoLeilao
+                 ) {
+                if(lance.getValor() == lances.getValor()){
+                    lancesIguais++;
+                }
+            }
+
 
         }
 

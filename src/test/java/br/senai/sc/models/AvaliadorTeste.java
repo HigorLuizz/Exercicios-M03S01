@@ -87,11 +87,15 @@ public class AvaliadorTeste {
     @Test
     public void naoDeveTerDoisLancesConcevutivos(){
         Usuario usuario1 = new Usuario("Higor",25,"12345678910");
+        Usuario usuario2 = new Usuario("Higor",25,"12345678910");
+        Usuario usuario3 = new Usuario("Higor",25,"12345678910");
+        Usuario usuario4 = new Usuario("Higor",25,"12345678910");
+        Usuario usuario5 = new Usuario("Higor",25,"12345678910");
         Lance lance1 = new Lance(usuario1, 200);
-        Lance lance2 = new Lance(usuario1, 300);
-        Lance lance3 = new Lance(usuario1, 500);
-        Lance lance4 = new Lance(usuario1, 150);
-        Lance lance5 = new Lance(usuario1, 400);
+        Lance lance2 = new Lance(usuario2, 300);
+        Lance lance3 = new Lance(usuario3, 500);
+        Lance lance4 = new Lance(usuario4, 150);
+        Lance lance5 = new Lance(usuario5, 400);
         Date datainicio = new Date(2023,1,24);
         Date datatermino = new Date(2023,1,25);
         Leilao leilao = new Leilao(datainicio, datatermino);
@@ -101,6 +105,8 @@ public class AvaliadorTeste {
         leilao.adiciona(lance4);
         leilao.adiciona(lance5);
         Avaliador leiloeiro = new Avaliador();
+        leiloeiro.avalia(leilao);
+        Assert.assertEquals(0,leiloeiro.getLancesConsecutivos());
 
     }
     @Test
@@ -123,5 +129,25 @@ public class AvaliadorTeste {
         leiloeiro.avalia(leilao);
         Assert.assertEquals(leiloeiro.getMaiorLance(), leiloeiro.getMenorLance(), 0);
 
+    }
+    @Test
+    public void verificaSeTemLancesIguais(){
+        Usuario usuario1 = new Usuario("Higor",25,"12345678910");
+        Lance lance1 = new Lance(usuario1, 200);
+        Lance lance2 = new Lance(usuario1, 300);
+        Lance lance3 = new Lance(usuario1, 500);
+        Lance lance4 = new Lance(usuario1, 150);
+        Lance lance5 = new Lance(usuario1, 400);
+        Date datainicio = new Date(2023,1,24);
+        Date datatermino = new Date(2023,1,25);
+        Leilao leilao = new Leilao(datainicio, datatermino);
+        leilao.adiciona(lance1);
+        leilao.adiciona(lance2);
+        leilao.adiciona(lance3);
+        leilao.adiciona(lance4);
+        leilao.adiciona(lance5);
+        Avaliador leiloeiro = new Avaliador();
+        leiloeiro.avalia(leilao);
+        Assert.assertEquals(leilao.getLances().size(), leiloeiro.getLancesIguais());
     }
 }
